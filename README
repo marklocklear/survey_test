@@ -1,1 +1,5 @@
-this is a test
+Go to http://localhost:3000/questions to add questions.
+
+Then go to http://localhost:3000/results/new and you will see a list of questions. You can 'score' each question 0-4.
+
+My goal is to save the question id and the score for each question.
