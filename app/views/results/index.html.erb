@@ -11,7 +11,7 @@
 
 <% @results.each do |result| %>
   <tr>
-    <td><%= result.question_id %></td>
+    <td><%= result.question.name %></td>
     <td><%= result.score %></td>
     <td><%= link_to 'Show', result %></td>
     <td><%= link_to 'Edit', edit_result_path(result) %></td>
@@ -22,4 +22,5 @@
 
 <br />
 
-<%= link_to 'New Result', new_result_path %>
+<%= link_to 'New Result', new_result_path %><br/>
+<%= link_to 'Back to Questions', questions_path %>

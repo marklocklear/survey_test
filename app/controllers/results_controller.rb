@@ -24,10 +24,10 @@ class ResultsController < ApplicationController
   # GET /results/new
   # GET /results/new.xml
   def new
+    @results = Array.new
     @questions = Question.all
     for question in @questions
-      @result = Result.new
-      question.results.build
+      @results.push question.results.build
     end
 
     respond_to do |format|
@@ -44,17 +44,12 @@ class ResultsController < ApplicationController
   # POST /results
   # POST /results.xml
   def create
-    @result = Result.new(params[:result])
-
-    respond_to do |format|
-      if @result.save
-        #format.html { redirect_to(@result, :notice => 'Result was successfully created.') }
-        format.html { redirect_to(results_path) }
-        format.xml  { render :xml => @result, :status => :created, :location => @result }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @result.errors, :status => :unprocessable_entity }
-      end
+     @results = params[:result].values.collect { |results| Result.new(results) }
+     if @results.all?(&:valid?)
+       @results.each(&:save!)
+       redirect_to results_path, :notice => "Successfully created result."
+    else
+      redirect_to results_path, :notice => "Oops! Something bad happened."
     end
   end
 
